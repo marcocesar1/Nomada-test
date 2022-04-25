@@ -1,0 +1,27 @@
+.container{
+    max-width: 1140px;
+    margin: auto;
+    padding: 15px;
+}
+
+.home{
+    &__card-cover{
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        max-width: 350px;
+        margin: auto;
+        padding-top: 1px;
+    }
+    &__card{
+        width: 100%;
+        cursor: auto;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+    &__dragger{
+        padding: 0px 12px;
+    }
+    &__btn-info{
+        margin-top: 12px;
+    }
+}

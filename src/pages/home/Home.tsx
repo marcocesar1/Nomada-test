@@ -1,61 +1,61 @@
-import { Upload, message } from 'antd';
+import { useSelector } from 'react-redux';
+import { Upload, Row, Col, Card, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 
-import { removeOnFileList, whoIs } from '../../store/slices/searchSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import { UploadFile } from 'antd/lib/upload/interface';
+import { RootState } from '../../store/store';
+import useDragger from '../../hooks/useDragger';
 
+import adivina from '../../assets/img/adivina.jpg';
+
+const { Meta } = Card;
 const { Dragger } = Upload;
-
-const mimetypes = ['image/png', 'image/jpeg'];
-
-const props = {
-  multiple: false,
-  accept: '.png,.jpeg,.jpg',
-  beforeUpload: (file: File) => {
-    if(!mimetypes.includes(file.type)){
-      message.error(`Only images`);
-      return false;
-    }
-    
-    return true;
-  }
-};
 
 function Home() {
 
-  const dispatch = useDispatch<AppDispatch>();
-  const { fileList, nomadaResp } = useSelector((state: RootState) => state.search);
+  const { draggerProps, handleDetail } = useDragger();
 
-  const {
-    error,
-    userName,
-    actorName
-  } = nomadaResp;
+  const { 
+    fileList,
+    nomadaResp
+  } = useSelector((state: RootState) => state.search);
 
-  const customRequest = (data: any) => {
-    dispatch(whoIs(data.file) as any)
-  };
-
-  const onRemove = (file: UploadFile<any>) => {
-    dispatch(removeOnFileList(file.uid) as any)
-  }
+  const { error, actorName } = nomadaResp;
 
   return (
-    <div>
+    <div className="container">
         Home
-        <p>Actor: {actorName}</p>
-        <p>Error: {error}</p>        
-        <Dragger {...props} customRequest={customRequest} fileList={fileList} onRemove={onRemove}>
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Haz click o arrastra una imagen</p>
-          <p className="ant-upload-hint">
-            Selecciona la foto de un actor famoso para conocer en qué películas ha salido
-          </p>          
-        </Dragger>
+        <Row>
+          <Col xs={24} md={{pull: 7, push: 7, span: 10}}>
+            <Card
+              hoverable
+              className="home__card"
+              cover={<img className="home__card-cover" alt="example" src={adivina} />}
+            >
+              <Meta title={actorName} description={error} />
+              {actorName && (
+                <Button 
+                  type="primary"
+                  className="home__btn-info"
+                  onClick={() => handleDetail(actorName)}
+                >Ver información</Button>
+              )}
+            </Card>
+            <div>
+              <Dragger 
+                {...draggerProps}
+                fileList={fileList}
+                className="home__dragger">
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">Haz click o arrastra una imagen</p>
+                <p className="ant-upload-hint">
+                  Selecciona la foto de un actor famoso para conocer en qué películas ha salido
+                </p>
+              </Dragger>
+            </div>
+          </Col>
+        </Row>
     </div>
   )
 }

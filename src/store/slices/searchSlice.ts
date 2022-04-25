@@ -5,12 +5,8 @@ import { sendFile } from '../../services/api';
 import { RootState } from '../store';
 
 export const whoIs = (file: File) => async (dispatch: Dispatch, getState: () => RootState) => {
-  dispatch(startUpload());
 
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const fileList = getState().search.fileList
+  const fileList = getState().search.fileList;
 
   const itemFileList: UploadFile<any> = {
     uid: (fileList.length + 1).toString(),
@@ -19,6 +15,10 @@ export const whoIs = (file: File) => async (dispatch: Dispatch, getState: () => 
     status: 'uploading',
   };
 
+  const formData = new FormData();
+  formData.append('file', file);
+
+  dispatch(startUpload());
   dispatch(addOnFileList(itemFileList));
 
   return sendFile<NomadaResp>(formData)
@@ -33,6 +33,7 @@ export const whoIs = (file: File) => async (dispatch: Dispatch, getState: () => 
 }
 
 const initialState: StateSearch = {
+  image: '',
   nomadaResp: {
     actorName: '',
     error: '',
@@ -72,10 +73,13 @@ export const searchSlice = createSlice({
     },
     errorUpload: (state, action: PayloadAction<string>) => {
       state.ui.isLoading = false;
+    },
+    setImage: (state, action: PayloadAction<string>) => {
+      state.image = action.payload;
     }
   },
 });
 
-export const { startUpload, successUpload, errorUpload, addOnFileList, removeOnFileList } = searchSlice.actions
+export const { startUpload, successUpload, errorUpload, addOnFileList, removeOnFileList, setImage } = searchSlice.actions
 
 export default searchSlice.reducer;
