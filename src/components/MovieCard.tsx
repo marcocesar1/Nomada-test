@@ -2,34 +2,44 @@ import { Card } from 'antd';
 
 import { posterPath } from '../config/moviedb';
 import { IKnownFor } from '../interfaces';
+import { humanDate } from '../helpers/date';
 
 import star from '../assets/img/star.png';
-import { humanDate } from '../helpers/date';
 
 interface Props{
     movie: IKnownFor
 }
 
-function MovieCard({movie} : Props) {
+function MovieCard({ movie } : Props) {
+
+    const {
+        title,
+        poster_path,
+        vote_average,
+        release_date
+    } = movie;
+
+    const stringDate = release_date ? humanDate(release_date) : '';
+
     return (
-        <Card title={movie.title} bordered={false}>
+        <Card title={title} bordered={false}>
             <div className="actor__card-info">
                 <div>
                     <div className="actor__poster-wrap">
-                        <img className="actor__movie-poster" src={`${posterPath}/${movie.poster_path}`} alt={movie.title} />
+                        <img className="actor__movie-poster" src={`${posterPath}${poster_path}`} alt={title} />
                     </div>
                     <div className="actor__movie-vote">                        
                         <img src={star} alt="vote average"/>
-                        <span> {movie.vote_average} / 10</span>
+                        <span> {vote_average} / 10</span>
                     </div>                  
                 </div>
                 <div className="actor__movie-description">
                     <p>{movie.overview}</p>
-                    <p className="ant-typography ant-typography-secondary">{humanDate(movie.release_date)}</p>
+                    <p className="ant-typography ant-typography-secondary">{stringDate}</p>
                 </div>
             </div>
         </Card>
     )
 }
 
-export default MovieCard
+export default MovieCard;

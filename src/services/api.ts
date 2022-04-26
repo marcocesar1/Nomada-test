@@ -15,6 +15,7 @@ export const searchPerson = <T>(query: string) =>
         axios.get<T>(moviesUrl, {
             params: {
                 api_key: 'df7f7008129612db90bc077f7bf3ebbd',
-                query
+                query,
+                language: 'es'
             }
         }).then(resp => resp.data).catch(handleError);

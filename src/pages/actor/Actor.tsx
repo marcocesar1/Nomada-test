@@ -44,11 +44,11 @@ const Actor = () => {
 
   return (
     <div className="container">
-      <Row>
+      {name && (<Row>
           <Col xs={24} md={6}>
             <Card
               hoverable
-              cover={<img className="actor__poster" src={`${posterPath}/${profile_path}`} alt={name} />}
+              cover={<img className="actor__poster" src={`${posterPath}${profile_path}`} alt={name} />}
             >
               <Meta title={name} description={`Popularidad: ${popularity}`} />
             </Card>
@@ -67,9 +67,9 @@ const Actor = () => {
               ))}
             </div>
           </Col>
-      </Row>      
+      </Row>)}    
     </div>
   )
 }
 
-export default Actor
+export default Actor;
