@@ -36,9 +36,13 @@
 .skeleton{
     &__wrap{
         display: flex;
+        @media (max-width: 767px){
+            flex-direction: column;
+        }
     }
     &__info{
         padding-left: 10px;
+        width: 100%;
     }
 }
 

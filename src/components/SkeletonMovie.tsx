@@ -8,11 +8,11 @@ function SkeletonMovie() {
             <Skeleton/>
         </div>
         <div className="skeleton__info">
-            <Skeleton active/>
+            <Skeleton/>
             <Divider />
-            <Skeleton active />
+            <Skeleton />
             <Divider />
-            <Skeleton active/>
+            <Skeleton />
         </div>
     </div>
   )
