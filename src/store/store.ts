@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import searchReducer from './slices/searchSlice';
-import detailReducer from './slices/detailSlice';
+import actorReducer from './slices/actorSlice';
 
 export const store = configureStore({
   reducer: {
     search: searchReducer,
-    detail: detailReducer
+    actor: actorReducer
   }
 })
 

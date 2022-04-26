@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { UploadFile } from 'antd/lib/upload/interface';
 
 import { removeOnFileList, setImage, whoIs } from '../store/slices/searchSlice';
@@ -15,7 +14,6 @@ const draggerProps = {
 
 const useDragger = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
 
     const customRequest = (data: any) => {
         dispatch(whoIs(data.file))
@@ -34,18 +32,12 @@ const useDragger = () => {
         dispatch(setImage(urlFile));
         return true;
     }
-    
-    const handleDetail = (actorName: string) => {
-        navigate(`/detail?actor=${actorName}`);
-    }
 
     return {
-        draggerProps: {
-            customRequest,
-            onRemove,
-            beforeUpload
-        },
-        handleDetail
+        ...draggerProps,
+        customRequest,
+        onRemove,
+        beforeUpload
     }
 }
 

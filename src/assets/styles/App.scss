@@ -25,3 +25,67 @@
         margin-top: 12px;
     }
 }
+
+.actor{
+    &__poster{
+        display: block;
+        width: 100%;
+    }
+}
+
+.skeleton{
+    &__wrap{
+        display: flex;
+    }
+    &__info{
+        padding-left: 10px;
+    }
+}
+
+.error-movie{
+    &__btn{
+        margin: 10px auto;
+        width: 90px;
+        display: block;
+    }
+}
+
+.actor{
+    &__movies{        
+        @media (min-width: 768px){
+            padding-left: 15px;
+        }
+    }
+    &__card-info{
+        display: flex;
+        @media (max-width: 767px){
+            flex-direction: column;
+        }
+    }
+    &__poster-wrap{
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    &__movie-vote{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__movie-poster{
+        width: 200px;
+        transition: transform .2s;
+        border-radius: 10px;
+        margin: 0px auto;
+        display: block;
+        &:hover{
+            transform :scale(1.1);
+        }
+    }
+    &__movie-description{
+        padding: 10px;
+        @media (max-width: 767px){
+            padding: 10px 0px;
+        }
+    }
+}
