@@ -40,7 +40,7 @@ const initialState: ActorState = {
 }
 
 export const detailSlice = createSlice({
-  name: 'counter',
+  name: 'actor',
   initialState,
   reducers: {
     startSearch: (state) => {

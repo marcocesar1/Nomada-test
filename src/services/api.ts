@@ -7,7 +7,7 @@ const moviesUrl = 'https://api.themoviedb.org/3/search/person';
 const nomadaKey = process.env.REACT_APP_NOMADA_KEY || '';
 const moviesKey = process.env.REACT_APP_MOVIEDB_KEY || '';
 
-export const sendFile = <T>(data: any) => 
+export const sendFile = <T>(data: FormData) => 
         axios.post<T>(nomadaUrl, data, {
             headers: {
                 'Nomada': nomadaKey
