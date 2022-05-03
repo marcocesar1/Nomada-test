@@ -1,15 +1,14 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { UploadFile, UploadFileStatus } from 'antd/lib/upload/interface';
+import { v4 as uuidv4 } from 'uuid';
+
 import { NomadaResp, SearchState } from '../../interfaces'
 import { sendFile } from '../../services/api';
-import { RootState } from '../store';
 
-export const whoIs = (file: File) => async (dispatch: Dispatch, getState: () => RootState) => {
-
-  const fileList = getState().search.fileList;
+export const whoIs = (file: File) => async (dispatch: Dispatch) => {
 
   const newItemFile: UploadFile<any> = {
-    uid: (fileList.length + 1).toString(),
+    uid: uuidv4(),
     name: file.name,
     percent: 50,
     status: 'uploading',
