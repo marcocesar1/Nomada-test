@@ -7,12 +7,18 @@ const moviesUrl = 'https://api.themoviedb.org/3/search/person';
 const nomadaKey = process.env.REACT_APP_NOMADA_KEY || '';
 const moviesKey = process.env.REACT_APP_MOVIEDB_KEY || '';
 
+axios.interceptors.response.use(undefined, error => {
+    const errorMessage = handleError(error);
+    
+    return Promise.reject(errorMessage);
+});
+
 export const sendFile = <T>(data: FormData) => 
         axios.post<T>(nomadaUrl, data, {
             headers: {
                 'Nomada': nomadaKey
             }
-        }).then(resp => resp.data).catch(handleError);
+        }).then(resp => resp.data);
 
 export const searchPerson = <T>(query: string) => 
         axios.get<T>(moviesUrl, {
@@ -21,4 +27,4 @@ export const searchPerson = <T>(query: string) =>
                 query,
                 language: 'es'
             }
-        }).then(resp => resp.data).catch(handleError);
+        }).then(resp => resp.data);
