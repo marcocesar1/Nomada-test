@@ -6,8 +6,9 @@ import { searchPerson } from '../../services/api';
 export const searchActor = (person: string) => async (dispatch: Dispatch) => {
   dispatch(startSearch());
 
-  return searchPerson<IActors>(person)
-  .then(resp => {
+  try {
+    const resp = await searchPerson<IActors>(person);
+
     const actor = resp.results.find(item => item.known_for.length);
 
     if(actor){
@@ -15,10 +16,9 @@ export const searchActor = (person: string) => async (dispatch: Dispatch) => {
     }else{
       dispatch(errorActor(`No se encontraron resultados para '${person}'`));
     }
-  })
-  .catch(err => {
-    dispatch(errorActor(err));
-  });
+  }catch(error) {
+    dispatch(errorActor(error as string));
+  }
 }
 
 const initialState: ActorState = {

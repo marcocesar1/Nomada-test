@@ -21,15 +21,15 @@ export const whoIs = (file: File) => async (dispatch: Dispatch, getState: () => 
   dispatch(startUpload());
   dispatch(addOnFileList(newItemFile));
 
-  return sendFile<NomadaResp>(formData)
-      .then(nomadaResp => {
-        dispatch(successUpload(nomadaResp));
-        dispatch(editOnFileList({ uid: newItemFile.uid, status: 'done' }));
-      })
-      .catch(err => {
-        dispatch(editOnFileList({ uid: newItemFile.uid, status: 'error' }));
-        dispatch(errorUpload(err));
-      });
+  try {
+    const nomadaResp = await sendFile<NomadaResp>(formData);
+
+    dispatch(successUpload(nomadaResp));
+    dispatch(editOnFileList({ uid: newItemFile.uid, status: 'done' }));
+  } catch (error) {
+    dispatch(editOnFileList({ uid: newItemFile.uid, status: 'error' }));
+    dispatch(errorUpload(error as string));
+  }
 }
 
 const initialState: SearchState = {
